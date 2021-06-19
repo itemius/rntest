@@ -16,9 +16,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const CameraScreen = props => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const images = useSelector(state => state.userReducer);
+    // const images = useSelector(state => state.userReducer.images);
     
-    const localPicture = useState(images);
+    // const localPicture = useState(images);
     
     const askPermission = () => {
       if (Platform.OS == 'ios') {
@@ -101,6 +101,7 @@ const CameraScreen = props => {
         const options = { quality: 0.5, base64: true };
         let data = await camera.current.takePictureAsync(options);
         console.log(data.uri);
+        navigation.goBack();
       }  
     
     return (

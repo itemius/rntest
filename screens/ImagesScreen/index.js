@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  SafeAreaView,
   Image,
   ScrollView,
   Text,
@@ -12,10 +13,10 @@ import axios from 'axios';
 import {useNavigation} from '@react-navigation/core';
 
 const HistoryScreen = () => {
-  const images = useSelector(state => state.userReducer.images);
-  // [{takenTime: Date(), coords:{longitude:"2", latitude:"3"}, uri:"3F7D1B19-1D4B-41BF-A6FC-35745F81757E.jpg"}, 
-  //   {takenTime: Date(), coords:{longitude:"2", latitude:"3"}, uri:"test"}, 
-  //   {takenTime: Date(), coords:{longitude:"2", latitude:"3"}, uri:"test"}];
+  const images = //useSelector(state => state.userReducer.images);
+  [{takenTime: Date(), coords:{longitude:"2", latitude:"3"}, uri:"3F7D1B19-1D4B-41BF-A6FC-35745F81757E.jpg"}, 
+    {takenTime: Date(), coords:{longitude:"2", latitude:"3"}, uri:"test"}, 
+    {takenTime: Date(), coords:{longitude:"2", latitude:"3"}, uri:"test"}];
   const navigation = useNavigation();
 //weather api key 7ecbd9692e8e44afbc1c3e6590423c55
 
@@ -31,6 +32,7 @@ const HistoryScreen = () => {
   };
 
   return (
+    <SafeAreaView>
       <ScrollView style={styles.wrapper}>
         {images.map(item => {
           return (
@@ -55,6 +57,7 @@ const HistoryScreen = () => {
           );
         })}
       </ScrollView>
+      </SafeAreaView>
   );
 };
 

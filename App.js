@@ -10,6 +10,7 @@ import CameraScreen from './screens/CameraScreen';
 import MapScreen from './screens/MapScreen';
 import ImagesScreen from './screens/ImagesScreen';
 import LoginScreen from './screens/LoginScreen';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,9 +44,26 @@ function Tabs() {
 
   return (
 
-    <Tab.Navigator>
-      <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Images" component={ImagesScreen} />
+    <Tab.Navigator             
+      tabBarOptions={{
+        activeTintColor: '#6dcfb6',
+        inactiveTintColor: 'gray',  
+      }}
+    >
+      <Tab.Screen name="Map" component={MapScreen} 
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Icon name="map-o" size={24} color={focused ? "#6dcfb6" : "gray"} />
+          ),
+        }}
+      />
+      <Tab.Screen name="Images" component={ImagesScreen}  
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Icon name="image" size={24} color={focused ? "#6dcfb6" : "gray"} />
+            ),
+          }}
+      />
     </Tab.Navigator>
   );
 }

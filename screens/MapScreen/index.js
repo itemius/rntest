@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import {setCoordinates, addLocation} from '../../actions';
 import {
+    SafeAreaView,
     View,
   } from 'react-native';
 
@@ -128,18 +129,22 @@ const MapScreen = () => {
 
 
     return (
+      <SafeAreaView style={{ width: '100%', flex: 1 }}>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <MapView style={{
-            width: '100%',
-            flex: 1,
-        }}
+          <MapView 
+            style={{
+              width: '100%',
+              flex: 1,
+            }}
+            showsUserLocation={true}  
             onPress={e => {
-            dispatch(addLocation(e.nativeEvent.coordinate));
-            navigation.navigate('CameraScreen', {coords: e.nativeEvent.coordinate});
-          }}
-          region = {position}
-    />
-      </View>
+              dispatch(addLocation(e.nativeEvent.coordinate));
+              navigation.navigate('CameraScreen', {coords: e.nativeEvent.coordinate});
+            }}
+            region = {position}
+          />
+        </View>
+      </SafeAreaView>
     );
   }
   
