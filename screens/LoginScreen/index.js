@@ -3,14 +3,10 @@ import {useNavigation} from '@react-navigation/native';
 
 import {
     // SafeAreaView,
-    ScrollView,
-    StatusBar,
+    TouchableOpacity,
     StyleSheet,
     Text,
     TextInput,
-    useColorScheme,
-    SafeAreaView,
-    Pressable,
     View,
   } from 'react-native';
 
@@ -57,14 +53,13 @@ function LoginScreen() {
           secureTextEntry
           style={style.textInput}></TextInput>
 
-        <Pressable     
+        <TouchableOpacity     
             style = {style.button}
             onPress={e => {
-                // dispatch(addLocation(e.nativeEvent.coordinate));
-                navigation.navigate('Map');
+                navigation.navigate('Tabs');
             }}
         ><Text style={style.buttonText}>Login</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>    
     );
   }

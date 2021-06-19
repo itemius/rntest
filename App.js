@@ -30,9 +30,9 @@ function App() {
   <Provider store={store}>
     <NavigationContainer>
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Tabs} />
+      <Stack.Screen name="Login" options={{headerShown: false}} component={LoginScreen} />
+      <Stack.Screen name="Tabs" options={{headerShown: false}} component={Tabs} />
       <Stack.Screen name="CameraScreen" component={CameraScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
     </NavigationContainer>
     </Provider>
@@ -45,7 +45,7 @@ function Tabs() {
 
     <Tab.Navigator>
       <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Imagess" component={ImagesScreen} />
+      <Tab.Screen name="Images" component={ImagesScreen} />
     </Tab.Navigator>
   );
 }
