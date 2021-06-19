@@ -15,19 +15,23 @@ const MapScreen = () => {
     const dispatch = useDispatch();
 
 
-  const [userCoords, setUserCoords] = useState({
-    lat: 88.8888888888,
-    lng: 22.2222222222,
+  const [position, setPosition] = useState({
+    latitude: 37,
+    longitude: 23,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
   });
 
   const getCoordinates = () => {
     Geolocation.getCurrentPosition(
       position => {
         dispatch(setCoordinates(position));
-        setUserCoords({
-          lat: parseFloat(position.coords.latitude),
-          lng: parseFloat(position.coords.longitude),
-        });
+        setPosition({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.0421,
+          longitudeDelta: 0.0421,
+        });  
       },
       error => {
         console.log(error.code, error.message);
@@ -133,12 +137,7 @@ const MapScreen = () => {
             dispatch(addLocation(e.nativeEvent.coordinate));
             navigation.navigate('CameraScreen', {coords: e.nativeEvent.coordinate});
           }}
-        initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
+          region = {position}
     />
       </View>
     );
