@@ -7,6 +7,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
   },
+  textContainer: {
+    width: '50%',
+    // height: '100%',
+    // backgroundColor: 'white',
+    alignItems: 'center',
+  },
   wrapper: {
     paddingHorizontal: 24,
     width: '100%',
@@ -37,7 +43,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   dateText: {
-    marginLeft: 20,
+    width: '100%',
+    marginLeft: 20
   },
 });
 

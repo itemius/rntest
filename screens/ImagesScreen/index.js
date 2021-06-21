@@ -70,14 +70,14 @@ const ImagesScreen = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>test</Text>
+      {/* <Text>test2</Text> */}
       <ScrollView style={styles.wrapper}>
         {images.map(item => {
           return (
             <View style={styles.imageContainer}>
               <Image style={styles.image} source={{uri: item.uri.startsWith('file://') ? item.uri.substr('file://'.length) : item.uri
               }}></Image> 
-                <View>
+                <View style={styles.textContainer}>
                 <Text style={styles.dateText}>
                   {new Date(item.date).toLocaleString()}
                 </Text>
