@@ -12,13 +12,22 @@ import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import {addImage} from '../../actions'
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import userReducer from '../../redux/reducer';
+import { ImageSchema, IMAGE_SCHEMA } from '../../realm/schemas';
+
+
+const Realm = require('realm');
+const databaseOptions = {
+  path: 'pixofarm.realm',
+  schema: [ImageSchema],
+  schemaVersion: 0
+};
 
 const CameraScreen = props => {
+
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    // const images = useSelector(state => state.userReducer.images);
-    
-    // const localPicture = useState(images);
     
     const askPermission = () => {
       if (Platform.OS == 'ios') {
@@ -85,25 +94,43 @@ const CameraScreen = props => {
     }, []);
     
     const camera = useRef();
+    let pic = "";
     
-    const storeData = async images => {
-      try {
-        await AsyncStorage.setItem(
-          'images',
-          JSON.stringify({images: images}),
-        );
-      } catch (e) {
-        console.log(e);
-      }
-    };
+    // const storeData = async images => {
+    //   try {
+    //     await AsyncStorage.setItem(
+    //       'images',
+    //       JSON.stringify({images: images}),
+    //     );
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // };
 
     takePicture = async () => {
         const options = { quality: 0.5, base64: true };
         let data = await camera.current.takePictureAsync(options);
         console.log(data.uri);
+
+        Realm.open(databaseOptions).then(realm => {
+          realm.write(() => {
+            realm.create(IMAGE_SCHEMA, {
+              imgID: new Date().getTime(),
+              lat: props.route.params.coords.latitude,
+              lng: props.route.params.coords.longitude,
+              date: Date(),
+              uri: data.uri
+            });
+
+            console.log("in realm");
+          });
+
+          realm.objects
+        });
+
         navigation.goBack();
       }  
-    
+
     return (
       <View style={styles.container}>
         <RNCamera
@@ -126,7 +153,7 @@ const CameraScreen = props => {
         />
         <View style={styles.overlay}>
           <TouchableOpacity onPress={() => takePicture()} style={styles.button}>
-            <Text style={styles.buttonText}>Take a picture</Text>
+            <Icon name="camera" size={24} color="white" />
           </TouchableOpacity>
         </View>
       </View>

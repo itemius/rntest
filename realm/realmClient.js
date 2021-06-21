@@ -5,3 +5,5 @@ const realm = await Realm.open({
     path: "myrealm",
     schema: [ImageSchema],
   });
+
+export default realm;

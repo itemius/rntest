@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useFocusEffect, useIsFocused} from 'react';
 import {
   SafeAreaView,
   Image,
@@ -11,12 +11,49 @@ import styles from './styles';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/core';
+import { ImageSchema, IMAGE_SCHEMA } from '../../realm/schemas';
 
-const HistoryScreen = () => {
-  const images = //useSelector(state => state.userReducer.images);
-  [{takenTime: Date(), coords:{longitude:"2", latitude:"3"}, uri:"3F7D1B19-1D4B-41BF-A6FC-35745F81757E.jpg"}, 
-    {takenTime: Date(), coords:{longitude:"2", latitude:"3"}, uri:"test"}, 
-    {takenTime: Date(), coords:{longitude:"2", latitude:"3"}, uri:"test"}];
+
+const Realm = require('realm');
+const databaseOptions = {
+  path: 'pixofarm.realm',
+  schema: [ImageSchema],
+  schemaVersion: 0
+};
+
+
+
+const ImagesScreen = props => {
+
+  // let images = [];
+  const [images, setImages] = useState([]);
+  // const isFocused = useIsFocused();
+
+
+  useEffect(() => {
+    Realm.open(databaseOptions).then(realm => {
+      let imagesRealm = realm.objects(IMAGE_SCHEMA);
+
+      console.log('images from realm end');
+      console.log(imagesRealm);
+      setImages(imagesRealm)
+
+    });
+
+}, []); 
+
+// useFocusEffect(
+//   Realm.open(databaseOptions).then(realm => {
+//     let imagesRealm = realm.objects(IMAGE_SCHEMA);
+
+//     console.log('images from realm end');
+//     // console.log(imagesRealm);
+//     // setImages(imagesRealm)
+
+//   })
+
+// )
+
   const navigation = useNavigation();
 //weather api key 7ecbd9692e8e44afbc1c3e6590423c55
 
@@ -32,22 +69,24 @@ const HistoryScreen = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.wrapper}>
         {images.map(item => {
           return (
-            <View>
-              <Image
-                source={{uri: item.uri?.toString()}}></Image>
-              <View>
-                <Text>
-                  {new Date(item.takenTime).toLocaleString()}
+            <View style={styles.imageContainer}>
+              {/* <Text>{item.uri?.toString().startsWith('file://') ? item.uri.substr('file://'.length) : item.uri}</Text> */}
+              {/* <Image style={styles.image} source={{uri: item.uri?.toString()}}></Image>  */}
+              <Image style={styles.image} source={item.uri?.toString().startsWith('file://') ? item.uri.substr('file://'.length) : item.uri
+              }></Image> 
+                <View>
+                <Text style={styles.dateText}>
+                  {new Date(item.date).toLocaleString()}
                 </Text>
-                <Text>
-                  {item.coords.latitude + '; ' + item.coords.longitude}
+                <Text style={styles.dateText}>
+                  {item.lat + '; ' + item.lng}
                 </Text>
               </View>
-              <TouchableOpacity
+              <TouchableOpacity style={styles.button}
                   onPress={() => {
                       sync();
                   }}>
@@ -61,4 +100,4 @@ const HistoryScreen = () => {
   );
 };
 
-export default HistoryScreen;
+export default ImagesScreen;

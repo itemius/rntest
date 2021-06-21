@@ -11,6 +11,8 @@ import MapScreen from './screens/MapScreen';
 import ImagesScreen from './screens/ImagesScreen';
 import LoginScreen from './screens/LoginScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
+// import { composeWithDevTools } from 'redux-devtools-extension';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +21,11 @@ const Stack = createStackNavigator();
 function App() {
 
   const middleware = [thunk];
+
+  // const store = createStore(userReducer, composeWithDevTools(
+  //   applyMiddleware(...middleware),
+  // ));
+
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
